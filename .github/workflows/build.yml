@@ -30,7 +30,7 @@ on:
 jobs:
   build:
     if: ${{inputs.ssh == false}}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     name: 🚀 编译 (Build)
     steps:
       - name: 下载编译所需的依赖 (Install the software packages required for compilation)
@@ -80,7 +80,7 @@ jobs:
       - name: 单线程编译 ImmortalWrt (Build ImmortalWrt single thread)
         if: ${{inputs.multithreading == false}}
         working-directory: ImmortalWrt
-        run: make -j1 V=s
+        run: make -j1 V=s 2>&1 | tee build.log
 
       - name: 上传编译结果到 Artifact (Upload build result to Artifact)
         uses: actions/upload-artifact@v4
@@ -91,7 +91,7 @@ jobs:
   build-ssh:
     if: ${{inputs.ssh == true}}
     name: 🚀 编译 (Build) - SSH
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: 下载编译所需的依赖 (Install the software packages required for compilation)
         run: |
