@@ -133,6 +133,12 @@ jobs:
             ImmortalWrt/feeds.conf.default
             ImmortalWrt/.config
 
+      - name: Pre-download GCC source
+        run: |
+         cd ImmortalWrt
+           mkdir -p dl
+           wget -c https://ftp.gnu.org/gnu/gcc/gcc-13.3.0/gcc-13.3.0.tar.xz -O dl/gcc-13.3.0.tar.xz
+
       - name: 多线程编译 ImmortalWrt (Build ImmortalWrt multithreading)
         if: ${{inputs.multithreading == true}}
         working-directory: ImmortalWrt
